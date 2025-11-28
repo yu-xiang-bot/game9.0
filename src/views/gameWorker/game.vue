@@ -198,7 +198,8 @@ async function uploadScore() {
       score: baseDataState.level,
       level: source.mapLevel
     })
-    ElMessage.success(res.isUpdate ? '恭喜，创造了当前地图的新纪录~~' : '还未超越最高分，继续努力吧~~')
+    const scoreData = res.data || res
+    ElMessage.success(scoreData.isUpdate ? '恭喜，创造了当前地图的新纪录~~' : '还未超越最高分，继续努力吧~~')
   } else {
     await waitTime(200)
     ElMessage.info('登录后才能上传成绩~~')

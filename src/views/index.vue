@@ -9,6 +9,7 @@ import { useRouter } from 'vue-router';
 import UserBall from '@/components/userBall.vue'
 import SelectTips from '@/components/selectTips.vue';
 import MyTools from '@/components/toolsFolder/myToolsFolder.vue';
+import { Setting } from '@element-plus/icons-vue';
 
 const source = useSourceStore()
 const router = useRouter()
@@ -63,6 +64,10 @@ const getCardText = (i: number) => {
   }
 }
 
+const goToAdmin = () => {
+  router.push('/admin')
+}
+
 </script>
 
 <template>
@@ -89,6 +94,9 @@ const getCardText = (i: number) => {
     <UserBall />
     <MyTools />
     <SelectTips @click-content="onCardClick(0)" />
+    <div class="admin-button" @click="goToAdmin">
+      <el-icon><Setting /></el-icon>
+    </div>
   </div>
 </template>
 
@@ -148,6 +156,33 @@ const getCardText = (i: number) => {
       transform: rotate(45deg);
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
     }
+  }
+}
+
+.admin-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #409EFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  
+  &:hover {
+    background-color: #337ecc;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+  }
+  
+  .el-icon {
+    font-size: 24px;
   }
 }
 </style>

@@ -1,6 +1,5 @@
 import { UserInfo } from '@/stores/userInfo';
-import request from './request';
-import { prefixAPI } from '@/config';
+import { userService } from './supabaseService';
 
 export type EditUserParams = {
   id: string
@@ -10,10 +9,11 @@ export type EditUserParams = {
 }
 
 /** 修改用户信息 */
-export const editUserApi = (
+export const editUserApi = async (
   params: EditUserParams
 ) => {
-  return request.post<UserInfo>(`/${prefixAPI}/users/editUser`, params)
+  const { id, ...updates } = params;
+  return userService.editUser(id, updates);
 }
 
 export type EditPassParams = {
@@ -23,8 +23,9 @@ export type EditPassParams = {
 }
 
 /** 修改密码 */
-export const editPassApi = (
+export const editPassApi = async (
   params: EditPassParams
 ) => {
-  return request.post(`/${prefixAPI}/users/editPassword`, params)
+  const { id, password, newPassword } = params;
+  return userService.editPassword(id, password, newPassword);
 }

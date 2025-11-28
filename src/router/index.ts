@@ -25,6 +25,11 @@ const routes = [
     name: 'createMap',
     component: () => import('../views/dev/createMap/index.vue') 
   },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import('../views/admin/index.vue') 
+  },
   // {
   //   path: '/teamfight-tactics',
   //   name: 'Teamfight Tactics',

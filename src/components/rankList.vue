@@ -25,7 +25,7 @@ const state = reactive({
 const getRankList = async () => {
   try {
     const res = await getRankListApi()
-    state.rankList = res
+    state.rankList = res.data || []
   } catch (error) {
     console.log('error: ', error);
   }

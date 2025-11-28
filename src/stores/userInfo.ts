@@ -26,8 +26,8 @@ export const useUserInfoStore = defineStore('userInfo', {
     async login({username, password}: LoginApiParams) {
       try {
         const res = await loginApi({username,password})
-        if(res) {
-          this.$state.userInfo = res
+        if(res && res.data) {
+          this.$state.userInfo = res.data
         }
         return res
       } catch (error) {

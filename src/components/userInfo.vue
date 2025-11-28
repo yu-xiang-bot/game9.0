@@ -56,7 +56,7 @@ const editUserInfo = async (params: Omit<EditUserParams, 'id'>, ruleFormRef?: Fo
     if(valid) {
       try {
         const res = await editUserApi({id: userInfoStore.userInfo!.id, ...params})
-        userInfoStore.userInfo = res
+        userInfoStore.userInfo = res.data || res
         ElMessage.success('修改成功')
       } catch (error) {
         console.log('error: ', error);

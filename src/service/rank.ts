@@ -1,5 +1,4 @@
-import { prefixAPI } from '@/config';
-import request from './request';
+import { gameScoreService } from './supabaseService';
 
 export type GameIdType = '101'
 
@@ -24,8 +23,8 @@ export type RankItem = {
   }
 } & RankScore
 
-export const getRankListApi = () => {
-  return request.get<RankItem[]>(`/${prefixAPI}/legendTD/getScoreList`)
+export const getRankListApi = async () => {
+  return gameScoreService.getRankList();
 }
 
 export type UpdateScoreParasm = {
@@ -42,6 +41,6 @@ export type UpdateScoreRes = {
   score: number
 }
 /** 上传得分 */
-export const updateScoreApi = (params: UpdateScoreParasm) => {
-  return request.post<UpdateScoreRes>(`/${prefixAPI}/legendTD/setScore`, params)
+export const updateScoreApi = async (params: UpdateScoreParasm) => {
+  return gameScoreService.updateScore(params.userId, params.level, params.score);
 }
