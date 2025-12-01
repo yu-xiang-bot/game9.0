@@ -1,11 +1,6 @@
 # 塔防联盟
 
-![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)
-![Vue](https://img.shields.io/badge/vue-3.3.4-green.svg)
-![TypeScript](https://img.shields.io/badge/typescript-5.1.6-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-
-## 项目简介
+ 
 
 塔防联盟是一款基于 Vue3 和 TypeScript 开发的网页塔防游戏，支持 PC 端和移动端。游戏采用 Canvas 渲染和 Web Worker 技术实现高性能游戏体验。
 
