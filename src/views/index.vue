@@ -107,7 +107,7 @@ const goToAdmin = () => {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-image: radial-gradient(circle 800px at center, #bcf1f3 0%, #95e0f3 47%, #68baf5 100%);
+  background-image: radial-gradient(circle 800px at center, #c5f6f8 0%, #8ad8ea 47%, #4fb3d3 100%);
   @gridSize: 1.2rem;
   .card {
     position: relative;
@@ -127,7 +127,7 @@ const goToAdmin = () => {
       z-index: -1;
       width: 100%;
       height: 100%;
-      background-image: radial-gradient(circle 250px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);
+      background-image: radial-gradient(circle 250px at center, #8ad8ea 0%, #4fb3d3 47%, #2980b9 100%);
       transition: filter .4s ease-out;
     }
     &-disable {
@@ -152,7 +152,7 @@ const goToAdmin = () => {
       font-size: 1rem;
       font-weight: bold;
       color: #fff;
-      background: @red;
+      background: @theme4;
       transform: rotate(45deg);
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
     }
@@ -165,7 +165,7 @@ const goToAdmin = () => {
   right: 20px;
   width: 50px;
   height: 50px;
-  background-color: #409EFF;
+  background-color: #2980b9;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -176,7 +176,7 @@ const goToAdmin = () => {
   z-index: 1000;
   
   &:hover {
-    background-color: #337ecc;
+    background-color: #1a5276;
     transform: scale(1.1);
     transition: all 0.3s ease;
   }

@@ -54,7 +54,7 @@ function transRatio(v: number) {
     position: absolute;
     top: calc(@size * 0.15);
     left: calc(@size * 0.35);
-    color: #f24410;
+    color: #e74c3c;
     font-size: calc(@size * 0.3);
     font-weight: bold;
     text-align: center;

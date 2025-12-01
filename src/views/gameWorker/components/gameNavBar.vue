@@ -120,11 +120,11 @@ const reStart = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #d2f5fa;
+  background: #b3e5fc;
   border-bottom-left-radius: @fontSize;
   border-bottom-right-radius: @fontSize;
   padding: 0 20px;
-  box-shadow: -7px 4px 14px #1781c2;
+  box-shadow: -7px 4px 14px #2980b9;
   user-select: none;
   .left {
     flex: 1;
@@ -193,11 +193,11 @@ const reStart = () => {
     line-height: @fontSize;
     font-weight: bold;
     color: @theme3;
-    background: #1781c2;
+    background: #2980b9;
     border-radius: calc(@size * 0.8);
     border: calc(@fontSize * 0.2) solid @theme3;
-    box-shadow: -7px 4px 14px #1781c2,
-      inset 3px 4px 6px #082a74;
+    box-shadow: -7px 4px 14px #2980b9,
+      inset 3px 4px 6px #1a5276;
     .fff-color {
       color: #fff;
     }
@@ -221,7 +221,7 @@ const reStart = () => {
       align-items: center;
       justify-content: center;
       border-radius: @size;
-      background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+      background-image: linear-gradient(to right, #2980b9 0%, #1abc9c 100%);
       margin-right: 20px;
       cursor: pointer;
       &:last-child {
@@ -229,7 +229,7 @@ const reStart = () => {
       }
       &:hover {
         opacity: .85;
-        box-shadow: 2px 2px 5px 1px #439ce9;
+        box-shadow: 2px 2px 5px 1px #3498db;
       }
       .iconfont {
         font-size: @fontSize;

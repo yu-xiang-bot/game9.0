@@ -207,13 +207,13 @@ import { adminService } from '@/service/adminService'
 
 // 响应式数据
 const loading = ref(false)
-const users = ref<any[]>([])
-const scores = ref<any[]>([])
+const users = ref([])
+const scores = ref([])
 const userSearch = ref('')
 const levelFilter = ref('')
 const userDialogVisible = ref(false)
-const selectedUser = ref<any>(null)
-const userScores = ref<any[]>([])
+const selectedUser = ref(null)
+const userScores = ref([])
 
 // 统计数据
 const stats = reactive({
@@ -226,7 +226,7 @@ const stats = reactive({
 // 计算属性
 const filteredUsers = computed(() => {
   if (!userSearch.value) return users.value
-  return users.value.filter((user: any) => 
+  return users.value.filter(user => 
     user.username.toLowerCase().includes(userSearch.value.toLowerCase()) ||
     (user.phone && user.phone.includes(userSearch.value))
   )
@@ -234,7 +234,7 @@ const filteredUsers = computed(() => {
 
 const filteredScores = computed(() => {
   if (!levelFilter.value) return scores.value
-  return scores.value.filter((score: any) => score.level === levelFilter.value)
+  return scores.value.filter(score => score.level === levelFilter.value)
 })
 
 // 方法
@@ -286,7 +286,7 @@ const filterUsers = () => {
   // 输入时自动过滤，无需额外操作
 }
 
-const viewUserDetails = async (user: any) => {
+const viewUserDetails = async (user) => {
   selectedUser.value = user
   
   try {
@@ -304,7 +304,7 @@ const viewUserDetails = async (user: any) => {
   }
 }
 
-const deleteUser = async (userId: string) => {
+const deleteUser = async (userId) => {
   try {
     await ElMessageBox.confirm('确定要删除该用户吗？这将同时删除其所有游戏记录。', '警告', {
       confirmButtonText: '确定',
@@ -328,7 +328,7 @@ const deleteUser = async (userId: string) => {
   }
 }
 
-const deleteScore = async (scoreId: string) => {
+const deleteScore = async (scoreId) => {
   try {
     await ElMessageBox.confirm('确定要删除这条游戏记录吗？', '警告', {
       confirmButtonText: '确定',
@@ -379,17 +379,17 @@ const exportData = async () => {
   }
 }
 
-const generateCSV = (data: any) => {
+const generateCSV = (data) => {
   let csv = '用户ID,用户名,手机号,注册时间,总分数,最高关卡,游戏次数\n'
   
-  data.forEach((user: any) => {
+  data.forEach(user => {
     csv += `${user.id},${user.username},${user.phone || ''},${user.created_at},${user.total_score || 0},${user.max_level || 0},${user.games_played || 0}\n`
   })
   
   return csv
 }
 
-const formatDate = (dateString: string) => {
+const formatDate = (dateString) => {
   if (!dateString) return ''
   const date = new Date(dateString)
   return date.toLocaleString('zh-CN')
@@ -457,19 +457,19 @@ onMounted(() => {
 }
 
 .user-icon {
-  background-color: #409EFF;
+  background-color: #2980b9;
 }
 
 .score-icon {
-  background-color: #67C23A;
+  background-color: #1abc9c;
 }
 
 .active-icon {
-  background-color: #E6A23C;
+  background-color: #3498db;
 }
 
 .highscore-icon {
-  background-color: #F56C6C;
+  background-color: #4fb3d3;
 }
 
 .stat-info h3 {

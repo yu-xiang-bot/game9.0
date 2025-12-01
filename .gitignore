@@ -25,3 +25,6 @@ yarn.lock
 *.sw?
 .vercel
 .env*.local
+
+.vercel
+.env*.local

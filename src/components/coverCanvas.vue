@@ -144,6 +144,6 @@ async function drawFloorTile() {
 .com-cover-canvas {
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle 250px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);
+  background-image: radial-gradient(circle 250px at center, #8ad8ea 0%, #4fb3d3 47%, #2980b9 100%);
 }
 </style>

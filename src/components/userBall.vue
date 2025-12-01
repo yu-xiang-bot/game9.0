@@ -217,12 +217,12 @@ onBeforeUnmount(clearBallSleep)
       font-weight: bold;
       font-size: 14px;
       color: #fff;
-      background-color: @purple1;
+      background-color: @theme4;
       cursor: pointer;
       transition: all 0.4s;
       &:hover {
         font-size: 14px;
-        background-color: @purple2;
+        background-color: @theme3;
       }
     }
     &-disable {

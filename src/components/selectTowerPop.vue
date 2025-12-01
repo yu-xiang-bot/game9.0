@@ -157,7 +157,7 @@ onMounted(() => {
 <style lang='less'>
 @import '@/style.less'; 
 .selectTowerPop {
-  background-image: radial-gradient(circle 350px at center, #bcf1f3 0%, #95e0f3 47%, #68baf5 100%);
+  background-image: radial-gradient(circle 350px at center, #c5f6f8 0%, #8ad8ea 47%, #4fb3d3 100%);
   .el-drawer__body {
     padding: 0;
     display: flex;
@@ -176,7 +176,7 @@ onMounted(() => {
       flex-direction: column;
       overflow-y: scroll;
       padding: @headerPadding;
-      border-right: 2px solid @red;
+      border-right: 2px solid @theme4;
       &::-webkit-scrollbar {
         display: none!important;
         width: 0px;  
@@ -238,11 +238,11 @@ onMounted(() => {
       z-index: 1;
       &-left {
         top: 3rem;
-        background: linear-gradient(to bottom, #68baf5, rgba(255, 255, 255, 0));
+        background: linear-gradient(to bottom, #4fb3d3, rgba(255, 255, 255, 0));
       }
       &-right {
         bottom: 0;
-        background: linear-gradient(to top, #68baf5, rgba(255, 255, 255, 0));
+        background: linear-gradient(to top, #4fb3d3, rgba(255, 255, 255, 0));
       }
     }
     .selectNum {
@@ -315,7 +315,7 @@ onMounted(() => {
         font-weight: bold;
         letter-spacing: 8px;
         color: #fff;
-        background: @red;
+        background: @theme4;
         transform: rotate(45deg);
         filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
       }
@@ -347,7 +347,7 @@ onMounted(() => {
         height: 100%;
         overflow-x: scroll;
         padding: 0 calc(0.8 * @maskWidth);
-        border-bottom: 2px solid @red;
+        border-bottom: 2px solid @theme4;
         .towerBox {
           margin-right: 10px;
           margin-bottom: 0;
@@ -363,13 +363,13 @@ onMounted(() => {
         &-left {
           top: auto;
           left: 0;
-          background: linear-gradient(to right, #68baf5, rgba(255, 255, 255, 0));
+          background: linear-gradient(to right, #4fb3d3, rgba(255, 255, 255, 0));
         }
         &-right {
           bottom: auto;
           left: auto;
           right: 0;
-          background: linear-gradient(to left, #68baf5, rgba(255, 255, 255, 0));
+          background: linear-gradient(to left, #4fb3d3, rgba(255, 255, 255, 0));
         }
       }
       .selectNum {

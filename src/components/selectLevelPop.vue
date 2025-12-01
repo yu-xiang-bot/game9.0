@@ -153,7 +153,7 @@ const getCardText = (i: number) => {
         font-weight: bold;
         color: #fff;
         border-radius: 50%;
-        background: @red;
+        background: @theme4;
       }
       &-selected {
         @size: 0.5rem;
@@ -162,8 +162,8 @@ const getCardText = (i: number) => {
         top: -@size;
         width: calc(100% + @size * 2);
         height: calc(100% + @size * 2);
-        // border: @size dashed @red;
-        background: repeating-linear-gradient(135deg, transparent, transparent 3px, @red 3px, @red 8px);
+        // border: @size dashed @theme4;
+        background: repeating-linear-gradient(135deg, transparent, transparent 3px, @theme4 3px, @theme4 8px);
         border-radius: 8px;
         animation: shine 2s infinite linear;
         opacity: 0.8;
