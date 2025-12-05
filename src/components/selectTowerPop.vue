@@ -7,7 +7,7 @@ import ScrollCircleItem from '@/components/scrollCircle/item.vue'
 import { useUserInfoStore } from '@/stores/userInfo';
 import TowerCanvas from './towerCanvas.vue';
 import { useSourceStore } from '@/stores/source';
-import { TowerName, TowerType } from '@/type';
+import { TowerName, TowerType } from '@/types';
 
 const userStore = useUserInfoStore()
 const source = useSourceStore()

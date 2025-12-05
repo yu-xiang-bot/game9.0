@@ -1,4 +1,4 @@
-import { EnemyDataObj, EnemyName, EnemyStaticItem } from "@/type/enemy";
+import { EnemyDataObj, EnemyName, EnemyStaticItem } from "@/types/enemy";
 import { requireCDN } from "@/utils/handleImg";
 const  _requireCDN = (url: string) => requireCDN(url, 'zombies')
 

@@ -1,4 +1,4 @@
-import { GameBaseData } from "@/type/game";
+import { GameBaseData } from "@/types/game";
 import { _DeepPartial } from "pinia";
 import { reactive } from "vue";
 

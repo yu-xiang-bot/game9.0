@@ -1,6 +1,6 @@
 import { ENEMY_MAX_LEVEL, enemyHpColors } from "@/dataSource/enemyData"
 import sourceInstance from "@/stores/sourceInstance"
-import { EnemyState, EnemyStateType, TowerSlow } from "@/type"
+import { EnemyState, EnemyStateType, TowerSlow } from "@/types"
 import keepInterval, { KeepIntervalKey } from "@/utils/keepInterval"
 import _ from "lodash"
 import { addMoney, baseDataState, gameConfigState, isNormalMode, onLevelChange, onReduceHp, onWorkerPostFn, setting, source } from "./baseData"
@@ -112,6 +112,11 @@ function setEnemy() {
 /** 伤害敌人 */
 function damageTheEnemy(enemy: EnemyStateType, damage: number) {
   enemy.hp.cur = Math.max(enemy.hp.cur - damage, 0)
+  
+  // 更新游戏统计数据 - 造成的伤害
+  if (!baseDataState.damageDealt) baseDataState.damageDealt = 0
+  baseDataState.damageDealt += damage
+  
   if(enemy.hp.cur <= 0) {
     if(setting.isTowerCover && !enemy.id.includes('callenemy')) {
       enemy.hp.cur = enemy.hp.sum
@@ -131,6 +136,11 @@ function moveEnemy(enemy: EnemyStateType) {
   // 敌人到达终点
   if(!setting.isTowerCover) {
     if(endDistance < 0) {
+      // 更新游戏统计数据 - 受到的伤害
+      if (!baseDataState.damageTaken) baseDataState.damageTaken = 0
+      // 这里可以加上敌人到达终点造成的伤害值，暂时计为1
+      baseDataState.damageTaken += 1
+      
       removeEnemy([id])
       onReduceHp(1)
       return true
@@ -182,6 +192,21 @@ function moveEnemy(enemy: EnemyStateType) {
 /** 消灭敌人 */
 function removeEnemy(e_idList: string[]) {
   for(const e_id of e_idList) {
+    const enemy = enemyMap.get(e_id)
+    
+    // 更新游戏统计数据 - 击败的敌人数量（只统计被击败的敌人，不是到达终点的）
+    if (enemy && !baseDataState.isGameOver) {
+      if (!baseDataState.enemiesKilled) baseDataState.enemiesKilled = 0
+      // 敌人血量为0时才计入击败数量
+      if (enemy.hp.cur <= 0) {
+        baseDataState.enemiesKilled++
+        
+        // 更新游戏统计数据 - 赚取的金钱
+        if (!baseDataState.coinsEarned) baseDataState.coinsEarned = 0
+        baseDataState.coinsEarned += enemy.reward || 0
+      }
+    }
+    
     keepInterval.delete(`${KeepIntervalKey.slow}-${e_id}`) // 清除减速持续时间定时器
     keepInterval.delete(`${KeepIntervalKey.twitch}-${e_id}`) // 清除中毒持续时间定时器
     keepInterval.delete(`${KeepIntervalKey.twitchDelete}-${e_id}`)

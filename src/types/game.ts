@@ -19,6 +19,8 @@ export type GameConfigType = {
   loadingDone: boolean,
   /** 游戏开始遮罩 */
   isGameBeginMask: boolean,
+  /** 游戏开始时间，用于计算游戏时长 */
+  gameStartTime?: number,
 }
 
 /** 游戏基本数据 */
@@ -39,6 +41,20 @@ export type GameBaseData = {
   hp: number
   /** 金钱 */
   money: number
+  /** 游戏统计 - 击败的敌人数量 */
+  enemiesKilled?: number
+  /** 游戏统计 - 建造的塔防数量 */
+  towersBuilt?: number
+  /** 游戏统计 - 花费的金钱 */
+  coinsSpent?: number
+  /** 游戏统计 - 赚取的金钱 */
+  coinsEarned?: number
+  /** 游戏统计 - 造成的伤害 */
+  damageDealt?: number
+  /** 游戏统计 - 受到的伤害 */
+  damageTaken?: number
+  /** 游戏统计 - 最大连击 */
+  maxCombo?: number
 }
 
 /** 游戏音乐 */

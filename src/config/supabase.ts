@@ -13,52 +13,403 @@ export interface Database {
     Tables: {
       users: {
         Row: {
-          id: string
+          user_id: string
           username: string
-          password: string
+          email: string
+          password_hash: string
+          display_name?: string
+          avatar_url?: string
           phone?: string
-          avatar?: string
+          current_level: number
+          total_score: number
+          games_played: number
+          games_won: number
+          coins: number
+          gems: number
+          experience_points: number
+          player_level: number
+          total_enemies_killed: number
+          total_towers_built: number
+          best_combo: number
+          play_time_total: number
+          gender?: string
+          bio?: string
+          registration_date: string
+          last_login?: string
+          last_game_played?: string
+          status: string
           created_at: string
           updated_at: string
         }
         Insert: {
-          id?: string
+          user_id?: string
           username: string
-          password: string
+          email: string
+          password_hash: string
+          display_name?: string
+          avatar_url?: string
           phone?: string
-          avatar?: string
+          current_level?: number
+          total_score?: number
+          games_played?: number
+          games_won?: number
+          coins?: number
+          gems?: number
+          experience_points?: number
+          player_level?: number
+          total_enemies_killed?: number
+          total_towers_built?: number
+          best_combo?: number
+          play_time_total?: number
+          gender?: string
+          bio?: string
+          registration_date?: string
+          last_login?: string
+          last_game_played?: string
+          status?: string
           created_at?: string
           updated_at?: string
         }
         Update: {
-          id?: string
+          user_id?: string
           username?: string
-          password?: string
+          email?: string
+          password_hash?: string
+          display_name?: string
+          avatar_url?: string
           phone?: string
-          avatar?: string
+          current_level?: number
+          total_score?: number
+          games_played?: number
+          games_won?: number
+          coins?: number
+          gems?: number
+          experience_points?: number
+          player_level?: number
+          total_enemies_killed?: number
+          total_towers_built?: number
+          best_combo?: number
+          play_time_total?: number
+          gender?: string
+          bio?: string
+          registration_date?: string
+          last_login?: string
+          last_game_played?: string
+          status?: string
           updated_at?: string
         }
       }
-      game_scores: {
+      game_levels: {
         Row: {
-          id: string
-          user_id: string
-          level: number
-          score: number
-          created_at: string
+          level_id: string
+          level_name: string
+          level_number: number
+          difficulty: string
+          map_data: any
+          initial_coins: number
+          max_waves: number
+          time_limit: number
+          required_stars: number
+          unlock_level?: string
+          star_rewards?: any
+          completion_bonus_coins: number
+          completion_bonus_gems: number
+          is_active: boolean
+          created_date: string
         }
         Insert: {
-          id?: string
-          user_id: string
-          level: number
-          score: number
-          created_at?: string
+          level_id?: string
+          level_name: string
+          level_number: number
+          difficulty?: string
+          map_data: any
+          initial_coins?: number
+          max_waves?: number
+          time_limit?: number
+          required_stars?: number
+          unlock_level?: string
+          star_rewards?: any
+          completion_bonus_coins?: number
+          completion_bonus_gems?: number
+          is_active?: boolean
+          created_date?: string
         }
         Update: {
-          id?: string
+          level_id?: string
+          level_name?: string
+          level_number?: number
+          difficulty?: string
+          map_data?: any
+          initial_coins?: number
+          max_waves?: number
+          time_limit?: number
+          required_stars?: number
+          unlock_level?: string
+          star_rewards?: any
+          completion_bonus_coins?: number
+          completion_bonus_gems?: number
+          is_active?: boolean
+        }
+      }
+      tower_types: {
+        Row: {
+          tower_id: string
+          tower_name: string
+          tower_code: string
+          description?: string
+          damage: number
+          attack_range: number
+          attack_speed: number
+          cost: number
+          upgrade_levels: any
+          max_level: number
+          special_abilities?: any
+          projectile_type: string
+          element_type: string
+          icon_url?: string
+          is_available: boolean
+        }
+        Insert: {
+          tower_id?: string
+          tower_name: string
+          tower_code: string
+          description?: string
+          damage: number
+          attack_range: number
+          attack_speed: number
+          cost: number
+          upgrade_levels: any
+          max_level?: number
+          special_abilities?: any
+          projectile_type?: string
+          element_type?: string
+          icon_url?: string
+          is_available?: boolean
+        }
+        Update: {
+          tower_id?: string
+          tower_name?: string
+          tower_code?: string
+          description?: string
+          damage?: number
+          attack_range?: number
+          attack_speed?: number
+          cost?: number
+          upgrade_levels?: any
+          max_level?: number
+          special_abilities?: any
+          projectile_type?: string
+          element_type?: string
+          icon_url?: string
+          is_available?: boolean
+        }
+      }
+      enemy_types: {
+        Row: {
+          enemy_id: string
+          enemy_name: string
+          enemy_code: string
+          description?: string
+          health: number
+          speed: number
+          armor: number
+          magic_resist: number
+          coin_reward: number
+          score_reward: number
+          abilities?: any
+          size: string
+          immunities?: any
+          icon_url?: string
+        }
+        Insert: {
+          enemy_id?: string
+          enemy_name: string
+          enemy_code: string
+          description?: string
+          health: number
+          speed: number
+          armor?: number
+          magic_resist?: number
+          coin_reward: number
+          score_reward: number
+          abilities?: any
+          size?: string
+          immunities?: any
+          icon_url?: string
+        }
+        Update: {
+          enemy_id?: string
+          enemy_name?: string
+          enemy_code?: string
+          description?: string
+          health?: number
+          speed?: number
+          armor?: number
+          magic_resist?: number
+          coin_reward?: number
+          score_reward?: number
+          abilities?: any
+          size?: string
+          immunities?: any
+          icon_url?: string
+        }
+      }
+      game_sessions: {
+        Row: {
+          session_id: string
+          user_id: string
+          level_id: string
+          score: number
+          stars_earned: number
+          is_victory: boolean
+          completion_time?: number
+          waves_completed: number
+          enemies_killed: number
+          towers_built: number
+          coins_spent: number
+          coins_earned: number
+          damage_dealt: number
+          damage_taken: number
+          max_combo: number
+          towers_used?: any
+          tower_upgrades?: any
+          start_time: string
+          end_time?: string
+          device_type: string
+          game_version: string
+        }
+        Insert: {
+          session_id?: string
+          user_id: string
+          level_id: string
+          score: number
+          stars_earned?: number
+          is_victory?: boolean
+          completion_time?: number
+          waves_completed?: number
+          enemies_killed?: number
+          towers_built?: number
+          coins_spent?: number
+          coins_earned?: number
+          damage_dealt?: number
+          damage_taken?: number
+          max_combo?: number
+          towers_used?: any
+          tower_upgrades?: any
+          start_time?: string
+          end_time?: string
+          device_type?: string
+          game_version?: string
+        }
+        Update: {
+          session_id?: string
           user_id?: string
-          level?: number
-          score?: string
+          level_id?: string
+          score?: number
+          stars_earned?: number
+          is_victory?: boolean
+          completion_time?: number
+          waves_completed?: number
+          enemies_killed?: number
+          towers_built?: number
+          coins_spent?: number
+          coins_earned?: number
+          damage_dealt?: number
+          damage_taken?: number
+          max_combo?: number
+          towers_used?: any
+          tower_upgrades?: any
+          end_time?: string
+          device_type?: string
+          game_version?: string
+        }
+      }
+      leaderboards: {
+        Row: {
+          leaderboard_id: string
+          level_id: string
+          user_id: string
+          score: number
+          completion_time?: number
+          waves_completed: number
+          stars_earned: number
+          rank_position: number
+          session_id: string
+          submission_date: string
+        }
+        Insert: {
+          leaderboard_id?: string
+          level_id: string
+          user_id: string
+          score: number
+          completion_time?: number
+          waves_completed?: number
+          stars_earned?: number
+          rank_position?: number
+          session_id: string
+          submission_date?: string
+        }
+        Update: {
+          leaderboard_id?: string
+          level_id?: string
+          user_id?: string
+          score?: number
+          completion_time?: number
+          waves_completed?: number
+          stars_earned?: number
+          rank_position?: number
+          session_id?: string
+          submission_date?: string
+        }
+      }
+      user_level_progress: {
+        Row: {
+          progress_id: string
+          user_id: string
+          level_id: string
+          best_score: number
+          stars_earned: number
+          completion_time: number
+          times_played: number
+          times_completed: number
+          enemies_killed: number
+          towers_built: number
+          damage_dealt: number
+          damage_taken: number
+          last_played?: string
+          best_combo: number
+        }
+        Insert: {
+          progress_id?: string
+          user_id: string
+          level_id: string
+          best_score?: number
+          stars_earned?: number
+          completion_time?: number
+          times_played?: number
+          times_completed?: number
+          enemies_killed?: number
+          towers_built?: number
+          damage_dealt?: number
+          damage_taken?: number
+          last_played?: string
+          best_combo?: number
+        }
+        Update: {
+          progress_id?: string
+          user_id?: string
+          level_id?: string
+          best_score?: number
+          stars_earned?: number
+          completion_time?: number
+          times_played?: number
+          times_completed?: number
+          enemies_killed?: number
+          towers_built?: number
+          damage_dealt?: number
+          damage_taken?: number
+          last_played?: string
+          best_combo?: number
         }
       }
     }

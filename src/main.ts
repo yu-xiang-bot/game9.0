@@ -18,4 +18,13 @@ app
 .use(ElementPlus)
 .use(pinia)
 
+// 应用启动时检查认证状态
+import { useUserInfoStore } from './stores/userInfo'
+
 app.mount('#app')
+
+// 在应用挂载后检查认证状态
+setTimeout(async () => {
+  const userInfoStore = useUserInfoStore()
+  await userInfoStore.checkAuthStatus()
+}, 0)

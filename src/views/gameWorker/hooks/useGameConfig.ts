@@ -1,4 +1,4 @@
-import { GameConfigType } from "@/type/game"
+import { GameConfigType } from "@/types/game"
 import { reactive } from "vue"
 
 export default function useGameConfig() {
@@ -16,6 +16,8 @@ export default function useGameConfig() {
     // 是否加载完成
     loadingDone: false,
     isGameBeginMask: true,
+    // 游戏开始时间，用于计算游戏时长
+    gameStartTime: undefined,
   })
   
   return {

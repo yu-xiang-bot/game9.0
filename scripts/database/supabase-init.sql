@@ -7,7 +7,10 @@ CREATE TABLE IF NOT EXISTS users (
   username VARCHAR(50) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
   phone VARCHAR(20),
+  email VARCHAR(100),
+  gender VARCHAR(10) DEFAULT 'other' CHECK (gender IN ('male', 'female', 'other')),
   avatar TEXT,
+  bio TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

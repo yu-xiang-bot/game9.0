@@ -3,7 +3,7 @@ import { ElDrawer, ElTooltip } from 'element-plus';
 import { useSourceStore } from '@/stores/source';
 import enemyObj, { enemyStaticData, enemyNameListData } from "@/dataSource/enemyData"
 import TowerCanvas from './towerCanvas.vue';
-import { EnemyName, TowerCanvasEnemy } from '@/type';
+import { EnemyName, TowerCanvasEnemy } from '@/types';
 
 const source = useSourceStore()
 

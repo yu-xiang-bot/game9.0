@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { GameBaseData, GameConfigType } from '@/type/game';
+import { GameBaseData, GameConfigType } from '@/types/game';
 import Loading from '@/components/loading.vue'
 
 const {gameConfigState, baseDataState} = defineProps<{

@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { computed } from 'vue';
 import { useSourceStore } from '@/stores/source';
-import { GameBaseData, TowerState, TowerName } from '@/type';
+import { GameBaseData, TowerState, TowerName } from '@/types';
 import otherImgData from '@/dataSource/otherImgData';
 import { useUserInfoStore } from '@/stores/userInfo';
 

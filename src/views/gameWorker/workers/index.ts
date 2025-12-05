@@ -17,7 +17,7 @@ import { addRowColArr } from "@/utils/direction";
 
 import levelData from "@/dataSource/levelData";
 import { GridInfo, MapGridInfo, towerCanvasMapData } from "@/dataSource/mapData";
-import { WithPartial } from "@/type";
+import { WithPartial } from "@/types";
 import { getLoadingAllImgParams } from "./tools/towerCanvas";
 
 addEventListener('message', e => {
@@ -62,6 +62,9 @@ addEventListener('message', e => {
     case 'handleSkill': {
       handleSkill(data.event); break;
     }
+    case 'resetGameStats': {
+      resetGameStats(); break;
+    }
   }
   if(data.isDevTestMode) {
     setting.isDevTestMode = true
@@ -98,6 +101,17 @@ async function init() {
     startAnimation()
   }
   onWorkerPostFn('onWorkerReady', baseDataState.end)
+}
+
+// 重置游戏统计数据
+function resetGameStats() {
+  baseDataState.enemiesKilled = 0;
+  baseDataState.towersBuilt = 0;
+  baseDataState.coinsSpent = 0;
+  baseDataState.coinsEarned = 0;
+  baseDataState.damageDealt = 0;
+  baseDataState.damageTaken = 0;
+  baseDataState.maxCombo = 0;
 }
 
 /** 开启动画绘画 */

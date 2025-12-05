@@ -21,6 +21,11 @@
           <span class="iconfont" :class="isPause ? 'icon-kaishi1' : 'icon-24gf-pause2'"></span>
         </span>
       </el-tooltip>
+      <el-tooltip effect="dark" content="退出游戏" :placement="source.isMobile ? 'left' : 'bottom'">
+        <span class="icon-wrap icon-hover exit-button" @click="exitGame">
+          <div class="icon-arrow-box"></div>
+        </span>
+      </el-tooltip>
       <el-tooltip effect="dark" content="播放 / 关闭音乐" :placement="source.isMobile ? 'left' : 'bottom'">
         <span class="icon-wrap icon-hover" @click="emit('playBgAudio')">
           <span class="iconfont" :class="isPlayBgAudio ? 'icon-mn_shengyin_fill' : 'icon-mn_shengyinwu_fill'"></span>
@@ -67,6 +72,7 @@ const emit = defineEmits<{
   (event: 'gamePause'): void
   (event: 'playBgAudio'): void
   (event: 'reStart'): void
+  (event: 'exitGame'): void
 }>()
 
 const source = useSourceStore()
@@ -101,6 +107,19 @@ const reStart = () => {
     }
   ).then(() => {
     emit('reStart')
+  })
+}
+
+const exitGame = () => {
+  ElMessageBox.confirm(
+    '您确定要退出游戏吗？当前页面游戏数据将清除。',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  ).then(() => {
+    emit('exitGame')
   })
 }
 
@@ -214,26 +233,193 @@ const reStart = () => {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    gap: 12px;
     .icon-wrap {
-      width: @smallSize;
-      height: @smallSize;
+      width: calc(@smallSize * 1.1);
+      height: calc(@smallSize * 1.1);
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: @size;
-      background-image: linear-gradient(to right, #2980b9 0%, #1abc9c 100%);
-      margin-right: 20px;
+      border-radius: 50%;
       cursor: pointer;
-      &:last-child {
-        margin-right: 0;
-      }
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      
+      /* 背景渐变 */
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      
+      /* 悬停效果 */
       &:hover {
-        opacity: .85;
-        box-shadow: 2px 2px 5px 1px #3498db;
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        
+        /* 添加光泽效果 */
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.5s;
+          left: 100%;
+        }
       }
+      
+      /* 活跃效果 */
+      &:active {
+        transform: translateY(0) scale(0.98);
+        box-shadow: 0 2px 10px rgba(102, 126, 234, 0.4);
+      }
+      
+      /* 内部光晕效果 */
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease;
+      }
+      
+      &:hover::after {
+        width: 100%;
+        height: 100%;
+      }
+      
+      /* 为不同按钮添加不同的颜色主题 */
+      &:nth-child(1) {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+      }
+      
+      /* 退出按钮 - 红色警告主题 */
+      &:nth-child(2) {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        
+        /* 添加脉冲效果，突出重要性 */
+        animation: exitPulse 2s infinite;
+        
+        /* 逃生箭头图标 */
+        .icon-arrow-box {
+          width: 18px;
+          height: 24px;
+          border: 3px solid rgba(255, 255, 255, 0.9); /* 方框边框 */
+          border-radius: 3px; /* 圆角效果 */
+          position: relative;
+          overflow: hidden; /* 隐藏箭头超出边框的部分 */
+          background: transparent; /* 背景色 */
+          transition: all 0.3s ease;
+        }
+
+        /* 箭头部分 */
+        .icon-arrow-box::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 3px; /* 箭头与左边框的距离 */
+          transform: translateY(-50%);
+          width: 12px;
+          height: 9px;
+          background: rgba(255, 255, 255, 0.95); /* 箭头颜色 */
+          clip-path: polygon(0 0, 80% 0, 100% 50%, 80% 100%, 0 100%, 20% 50%); /* 箭头形状 */
+          transition: all 0.3s ease;
+        }
+        
+        /* 悬停效果 */
+        &:hover .icon-arrow-box {
+          border-color: rgba(255, 255, 255, 1);
+          transform: scale(1.1);
+        }
+        
+        &:hover .icon-arrow-box::after {
+          left: 4px;
+          background: rgba(255, 255, 255, 1);
+          clip-path: polygon(0 0, 70% 0, 100% 50%, 70% 100%, 0 100%, 30% 50%); /* 更尖锐的箭头 */
+        }
+        
+        /* 按下效果 */
+        &:active .icon-arrow-box {
+          transform: scale(0.95);
+        }
+        
+        &:active .icon-arrow-box::after {
+          left: 1px;
+        }
+      }
+      
+      &:nth-child(3) {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        box-shadow: 0 4px 15px rgba(67, 233, 123, 0.4);
+      }
+      
+      &:nth-child(4) {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        box-shadow: 0 4px 15px rgba(250, 112, 154, 0.4);
+      }
+      
+      &:nth-child(5) {
+        background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        box-shadow: 0 4px 15px rgba(48, 207, 208, 0.4);
+      }
+      
+      /* 悬停时的阴影效果 */
+      &:nth-child(1):hover {
+        box-shadow: 0 6px 20px rgba(240, 147, 251, 0.6);
+      }
+      
+      /* 退出按钮悬停时更强烈的警告效果 */
+      &:nth-child(2):hover {
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.7);
+        background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: translateY(-3px) scale(1.08);
+      }
+      
+      &:nth-child(3):hover {
+        box-shadow: 0 6px 20px rgba(67, 233, 123, 0.6);
+      }
+      
+      &:nth-child(4):hover {
+        box-shadow: 0 6px 20px rgba(250, 112, 154, 0.6);
+      }
+      
+      &:nth-child(5):hover {
+        box-shadow: 0 6px 20px rgba(48, 207, 208, 0.6);
+      }
+      
+      /* 退出按钮脉冲动画 */
+      @keyframes exitPulse {
+        0%, 100% {
+          transform: scale(1);
+          box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+        50% {
+          transform: scale(1.02);
+          box-shadow: 0 6px 18px rgba(255, 107, 107, 0.6);
+        }
+      }
+      
       .iconfont {
-        font-size: @fontSize;
+        font-size: calc(@fontSize * 0.9);
         color: #fff;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      
+      /* 悬停时图标缩放效果 */
+      &:hover .iconfont {
+        transform: scale(1.1);
       }
     }
   }

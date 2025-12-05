@@ -1,4 +1,4 @@
-import { EnemyStateType, TowerStateType } from "@/type"
+import { EnemyStateType, TowerStateType } from "@/types"
 import { TargetCircleInfo, addMoney, baseDataState, checkValInCircle, gameConfigState, onWorkerPostFn, setting, source } from "./baseData"
 import keepInterval, { KeepIntervalKey } from "@/utils/keepInterval"
 import { randomStr } from "@/utils/random"
@@ -52,6 +52,17 @@ function buildTower({x, y, tname}: BuildTowerParams, isMusic = true, isMoney = t
     // 用于标记是哪个塔防 10 + index
     baseDataState.gridInfo.arr[Math.floor(y / size)][Math.floor(x / size)] = 'tower'
   }
+  
+  // 更新游戏统计数据 - 建造的塔防数量
+  if (!baseDataState.towersBuilt) baseDataState.towersBuilt = 0
+  baseDataState.towersBuilt++
+  
+  // 更新游戏统计数据 - 花费的金钱
+  if (!baseDataState.coinsSpent) baseDataState.coinsSpent = 0
+  if (isMoney) {
+    baseDataState.coinsSpent += money
+  }
+  
   drawTower(tower)
   onWorkerPostFn('buildTowerCallback', {towerId: tower.id, audioKey: tower.audioKey})
   if(isMusic) {

@@ -1,4 +1,4 @@
-import { TowerDataObj, TowerName, TowerStaticItem } from "@/type";
+import { TowerDataObj, TowerName, TowerStaticItem } from "@/types";
 import { requireCDN } from "@/utils/handleImg";
 const  _requireCDN = (url: string) => requireCDN(url, 'tower')
 

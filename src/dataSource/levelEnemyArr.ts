@@ -1,4 +1,4 @@
-import { EnemyName } from "@/type"
+import { EnemyName } from "@/types"
 
 const levelEnemyArr: EnemyName[][][] = [
   // 第一关

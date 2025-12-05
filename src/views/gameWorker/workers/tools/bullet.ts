@@ -1,4 +1,4 @@
-import { BulletType, EnemyStateType, SpecialBulletItem, SpecialBullets, TargetInfo, TowerStateType, TowerName, TowerType } from "@/type"
+import { BulletType, EnemyStateType, SpecialBulletItem, SpecialBullets, TargetInfo, TowerStateType, TowerName, TowerType } from "@/types"
 import { damageTheEnemy, enemyMap, removeEnemy, slowEnemy } from "./enemy"
 import { addMoney, canvasInfo, gameConfigState, setting, source } from "./baseData"
 import { powAndSqrt } from "@/utils/tools"

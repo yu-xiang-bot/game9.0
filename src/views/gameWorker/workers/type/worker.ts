@@ -2,6 +2,7 @@ export type WorkerFnName = 'getMouse'
 | 'buildTower'
 | 'saleTower' 
 | 'handleSkill'
+| 'resetGameStats'
 
 export type VueFnName = 'onWorkerReady'
 | 'handlerTower' 

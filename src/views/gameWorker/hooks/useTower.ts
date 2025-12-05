@@ -1,4 +1,4 @@
-import { TowerState } from "@/type";
+import { TowerState } from "@/types";
 import _ from "lodash";
 import { reactive } from "vue";
 

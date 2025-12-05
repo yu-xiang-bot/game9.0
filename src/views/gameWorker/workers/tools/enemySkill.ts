@@ -6,7 +6,7 @@ import { getEndXy, isLineInRect } from "./compute"
 import keepInterval, { KeepIntervalKey } from "@/utils/keepInterval";
 import { limitRange, powAndSqrt } from "@/utils/tools"
 import { getPointsCos } from "@/utils/handleCircle"
-import { EnemyStateType } from "@/type";
+import { EnemyStateType } from "@/types";
 import sourceInstance from "@/stores/sourceInstance";
 import { randomStr } from "@/utils/random";
 import { drawLinearGradientRoundRect } from "./canvas";

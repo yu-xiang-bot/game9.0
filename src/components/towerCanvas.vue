@@ -6,7 +6,7 @@ import { randomStr } from '@/utils/random';
 import _ from 'lodash';
 import { onMounted, onUnmounted, reactive, ref, watch } from 'vue';
 import Loading from "./loading.vue";
-import { TowerCanvasEnemy, TowerCanvasTower, TowerName } from "@/type";
+import { TowerCanvasEnemy, TowerCanvasTower, TowerName } from "@/types";
 
 const props = withDefaults(defineProps<{
   /** 只传塔防名字，代表只有一座塔防 */

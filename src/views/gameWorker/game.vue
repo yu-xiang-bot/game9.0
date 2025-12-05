@@ -3,7 +3,7 @@ import { nextTick, onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import { useRoute } from "vue-router";
 import Worker from "./workers/index.ts?worker"
 import { VueFnName, WorkerFnName } from "./workers/type/worker";
-import { TowerName } from "@/type";
+import { TowerName } from "@/types";
 
 import { ElMessage } from "element-plus";
 import GameNavBar from './components/gameNavBar.vue'
@@ -32,6 +32,7 @@ import audioData from "@/dataSource/audioData"
 
 const emit = defineEmits<{
   (event: 'reStart'): void
+  (event: 'exitGame'): void
 }>()
 
 const source = useSourceStore()
@@ -193,17 +194,47 @@ async function uploadScore() {
       await waitTime(200)
       return ElMessage.info('很遗憾你一波敌人都没抵御成功')
     }
-    const res = await updateScoreApi({
-      userId: userInfo.id,
-      score: baseDataState.level,
-      level: source.mapLevel
-    })
-    const scoreData = res.data || res
-    ElMessage.success(scoreData.isUpdate ? '恭喜，创造了当前地图的新纪录~~' : '还未超越最高分，继续努力吧~~')
+    
+    // 保存游戏结果到Supabase
+    try {
+      await userInfoStore.recordGameResult({
+        levelId: source.mapLevel.toString(),
+        score: baseDataState.level * 100, // 转换为分数
+        starsEarned: baseDataState.level > 10 ? 3 : baseDataState.level > 5 ? 2 : 1,
+        isVictory: baseDataState.hp > 0,
+        completionTime: Date.now() - (gameConfigState.gameStartTime || Date.now()),
+        wavesCompleted: baseDataState.level,
+        enemiesKilled: baseDataState.enemiesKilled || 0,
+        towersBuilt: baseDataState.towersBuilt || 0,
+        coinsSpent: baseDataState.coinsSpent || 0,
+        coinsEarned: baseDataState.coinsEarned || 0,
+        damageDealt: baseDataState.damageDealt || 0,
+        damageTaken: baseDataState.damageTaken || 0,
+        maxCombo: baseDataState.maxCombo || 0,
+        towersUsed: userInfoStore.towerSelectList
+      })
+      
+      // 更新排行榜
+      const res = await updateScoreApi({
+        userId: userInfo.id,
+        score: baseDataState.level * 100, // 转换为分数
+        level: source.mapLevel
+      })
+      const scoreData = (res as any).data || res
+      ElMessage.success(scoreData.isUpdate ? '恭喜，创造了当前地图的新纪录~~' : '还未超越最高分，继续努力吧~~')
+    } catch (error) {
+      console.error('保存游戏结果失败:', error)
+      ElMessage.error('保存游戏结果失败，请重试')
+    }
   } else {
     await waitTime(200)
     ElMessage.info('登录后才能上传成绩~~')
   }
+}
+
+const exitGame = () => {
+  onGameOver()
+  emit('exitGame')
 }
 /** 点击建造塔防 */
 function buildTower(tname: TowerName) {
@@ -244,6 +275,11 @@ function beginGame() {
   audioLevelRef.value?.play()
   playBgAudio()
   gameConfigState.isGameBeginMask = false
+  gameConfigState.gameStartTime = Date.now() // 记录游戏开始时间
+  
+  // 初始化游戏统计数据
+  onWorkerPostFn('resetGameStats', {})
+  
   gamePause(false)
   ElMessage({type: 'success', message: '点击右上方按钮或按空格键继续 / 暂停游戏', duration: 2500, showClose: true})
   source.isGameing = true
@@ -335,6 +371,7 @@ function onWorkerPostFn(fnName: WorkerFnName, event?: any) {
           @re-start="uploadScore().then(() => {
             emit('reStart')
           })"
+          @exit-game="exitGame"
         />
         <!-- 游戏区域 -->
         <canvas 

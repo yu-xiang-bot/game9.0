@@ -1,5 +1,5 @@
 import skillData from "@/dataSource/skillData";
-import { GameMasterSkill } from "@/type/game";
+import { GameMasterSkill } from "@/types/game";
 import { reactive } from "vue";
 
 export default function useGameSkill() {

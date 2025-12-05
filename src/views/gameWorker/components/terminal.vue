@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { useSourceStore } from '@/stores/source';
-import { GameBaseData, GameConfigType, GameMasterSkill } from '@/type/game';
+import { GameBaseData, GameConfigType, GameMasterSkill } from '@/types/game';
 import { computed } from 'vue';
 import otherImgData from '@/dataSource/otherImgData';
 

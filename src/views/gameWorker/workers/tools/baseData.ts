@@ -1,11 +1,11 @@
-import { TargetInfo } from "@/type/game";
+import { TargetInfo } from "@/types/game";
 import { powAndSqrt, randomEnemyNameList } from "@/utils/tools";
 import { VueFnName } from "../type/worker";
 import keepInterval from "@/utils/keepInterval";
 import sourceInstance from "@/stores/sourceInstance";
 import { enemyState, makeEnemy } from "./enemy";
 import levelData, { LevelDataItemEnum } from "@/dataSource/levelData";
-import { TowerCanvasEnemy, TowerCanvasTower, EnemyName } from "@/type";
+import { TowerCanvasEnemy, TowerCanvasTower, EnemyName } from "@/types";
 import levelEnemyArr from "@/dataSource/levelEnemyArr";
 import { GridValue } from "../type/baseData";
 import { MapDataItem } from "@/dataSource/mapData";
@@ -43,6 +43,16 @@ const baseDataState = {
   intervalTime: 900,
   /** 终点的位置 */
   end: {x: 0, y: 0},
+  // 游戏统计数据 - 初始化为0
+  enemiesKilled: 0,
+  towersBuilt: 0,
+  coinsSpent: 0,
+  coinsEarned: 0,
+  // 游戏结束标志
+  isGameOver: false,
+  damageDealt: 0,
+  damageTaken: 0,
+  maxCombo: 0,
 }
 
 const gameConfigState = {

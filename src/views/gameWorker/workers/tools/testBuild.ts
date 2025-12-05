@@ -1,4 +1,4 @@
-import { TowerName } from "@/type"
+import { TowerName } from "@/types"
 import { addMoney, gameConfigState, setting } from "./baseData"
 import { enemyState } from "./enemy"
 import { buildTower } from "./tower"

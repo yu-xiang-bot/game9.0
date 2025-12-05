@@ -87,6 +87,7 @@ onMounted(() => {
     <ProtectTheHorse
       v-if="state.isProtectTheHorse" 
       @re-start="reStart"
+      @exit-game="$router.push('/')"
     />
     <UserBall :itemsNum="4" @switchMapLevel="switchMapLevel" @re-start="reStart" />
   </div>

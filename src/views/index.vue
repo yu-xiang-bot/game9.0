@@ -68,6 +68,8 @@ const goToAdmin = () => {
   router.push('/admin')
 }
 
+
+
 </script>
 
 <template>
@@ -94,6 +96,9 @@ const goToAdmin = () => {
     <UserBall />
     <MyTools />
     <SelectTips @click-content="onCardClick(0)" />
+    
+
+    
     <div class="admin-button" @click="goToAdmin">
       <el-icon><Setting /></el-icon>
     </div>
@@ -158,6 +163,8 @@ const goToAdmin = () => {
     }
   }
 }
+
+
 
 .admin-button {
   position: fixed;
