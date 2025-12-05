@@ -1,12 +1,12 @@
 // 使用服务角色密钥上传（绕过RLS限制）
 import { createClient } from '@supabase/supabase-js'
-import { readFileSync, readdirSync, statSync } from 'fs'
+import { readFileSync, readdirSync, statSync, existsSync } from 'fs'
 import { join, extname, basename } from 'path'
 
-const SUPABASE_URL = 'https://vcmrpbysnxzqhxjfvshf.supabase.co'
-
-// 服务角色密钥（已替换为真实密钥）
-const SERVICE_ROLE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjbXJwYnlzbnh6cWh4amZ2c2hmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2Mzk2NzcwNiwiZXhwIjoyMDc5NTQzNzA2fQ.xguaCBWLUtpu0Fd2dyftnAC6sV0TGehBkUKwBhBKgrQ'
+// 从环境变量获取配置，如果没有则使用默认值
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://vcmrpbysnxzqhxjfvshf.supabase.co'
+const SERVICE_ROLE_KEY = process.env.SUPABASE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjbXJwYnlzbnh6cWh4amZ2c2hmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2Mzk2NzcwNiwiZXhwIjoyMDc5NTQzNzA2fQ.xguaCBWLUtpu0Fd2dyftnAC6sV0TGehBkUKwBhBKgrQ'
+const BUCKET_NAME = process.env.BUCKET_NAME || 'game-assets'
 
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY)
 
@@ -99,7 +99,6 @@ async function uploadWithServiceKey() {
   console.log('📅 时间:', new Date().toLocaleString())
   console.log('')
   
-  const publicDir = join(process.cwd(), 'public')
   let totalSuccess = 0
   let totalFiles = 0
   
@@ -118,20 +117,37 @@ async function uploadWithServiceKey() {
     
     console.log('')
     
-    // 上传assets目录到assets桶
-    const assetsDir = join(publicDir, 'assets')
-    if (statSync(assetsDir).isDirectory()) {
-      console.log('🖼️ 上传图片资源到 assets 桶...')
-      const result = await uploadDirectory(assetsDir, 'assets')
+    // 检查并创建目标存储桶（如果不存在）
+    const bucketExists = buckets.some(b => b.name === BUCKET_NAME)
+    if (!bucketExists) {
+      console.log(`🪣 创建存储桶 ${BUCKET_NAME}...`)
+      const { error: createError } = await supabase.storage.createBucket(BUCKET_NAME, {
+        public: true,
+        fileSizeLimit: 52428800 // 50MB
+      })
+      
+      if (createError) {
+        console.error(`❌ 创建存储桶失败: ${createError.message}`)
+        return
+      } else {
+        console.log(`✅ 存储桶 ${BUCKET_NAME} 创建成功`)
+      }
+    }
+    
+    // 上传构建后的文件（dist目录）
+    const distDir = join(process.cwd(), 'dist')
+    if (existsSync(distDir) && statSync(distDir).isDirectory()) {
+      console.log(`📦 上传构建后的游戏文件到 ${BUCKET_NAME} 桶...`)
+      const result = await uploadDirectory(distDir, BUCKET_NAME)
       totalSuccess += result.successCount
       totalFiles += result.totalCount
     }
     
-    // 上传audio目录到audio桶
-    const audioDir = join(publicDir, 'audio')
-    if (statSync(audioDir).isDirectory()) {
-      console.log('\n🎵 上传音频资源到 audio 桶...')
-      const result = await uploadDirectory(audioDir, 'audio')
+    // 如果没有dist目录，则上传public目录的资源
+    const publicDir = join(process.cwd(), 'public')
+    if (!existsSync(distDir) && existsSync(publicDir) && statSync(publicDir).isDirectory()) {
+      console.log(`📦 上传游戏资源到 ${BUCKET_NAME} 桶...`)
+      const result = await uploadDirectory(publicDir, BUCKET_NAME)
       totalSuccess += result.successCount
       totalFiles += result.totalCount
     }
@@ -146,11 +162,9 @@ async function uploadWithServiceKey() {
     console.log(`📈 成功率: ${totalFiles > 0 ? ((totalSuccess / totalFiles) * 100).toFixed(2) : 0}%`)
     
     if (totalSuccess > 0) {
-      console.log('\n🌐 资源访问URL:')
-      console.log(`📷 图片资源: ${SUPABASE_URL}/storage/v1/object/public/assets/local/`)
-      console.log(`🎵 音频资源: ${SUPABASE_URL}/storage/v1/object/public/audio/`)
-      console.log(`🎯 完整示例: ${SUPABASE_URL}/storage/v1/object/public/assets/local/nanqiang.png`)
-      console.log('\n✨ 游戏资源上传完成！所有资源现在可以在游戏中使用')
+      console.log('\n🌐 游戏访问URL:')
+      console.log(`🎮 游戏入口: ${SUPABASE_URL}/storage/v1/object/public/${BUCKET_NAME}/index.html`)
+      console.log('\n✨ 游戏部署完成！')
     }
     
   } catch (error) {

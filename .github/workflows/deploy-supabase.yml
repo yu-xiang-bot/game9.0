@@ -1,0 +1,41 @@
+name: Deploy Game to Supabase
+
+on:
+  push:
+    branches: [ main, master ]  # 监听 main 和 master 分支的推送
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload to Supabase Storage
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME || 'game-assets' }}
+        run: |
+          # 执行上传脚本
+          node upload-with-service-key.js
+          
+      - name: Get deployment URL
+        if: success()
+        run: |
+          GAME_URL="${{ secrets.SUPABASE_URL }}/storage/v1/object/public/${{ secrets.BUCKET_NAME || 'game-assets' }}/index.html"
+          echo "🎮 游戏部署完成！访问地址: $GAME_URL"
+          echo "::set-output name=game_url::$GAME_URL"
