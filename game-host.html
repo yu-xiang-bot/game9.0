@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>塔防联盟</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div id="loading" class="loading">加载中...</div>
+  <iframe id="gameFrame" style="display:none;"></iframe>
+
+  <script>
+    // 游戏URL
+    const gameUrl = 'https://vcmrpbysnxzqhxjfvshf.supabase.co/storage/v1/object/public/game-assets/index.html';
+    
+    // 加载游戏
+    window.onload = function() {
+      const iframe = document.getElementById('gameFrame');
+      const loading = document.getElementById('loading');
+      
+      iframe.src = gameUrl;
+      iframe.style.display = 'block';
+      loading.style.display = 'none';
+    };
+  </script>
+</body>
+</html>

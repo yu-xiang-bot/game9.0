@@ -54,7 +54,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(), // hash模式：createWebHashHistory history模式：createWebHistory
-  routes
+  routes: routes as any
 })
 
 // 路由守卫

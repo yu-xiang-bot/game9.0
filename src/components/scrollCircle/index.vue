@@ -268,7 +268,7 @@ const _onScrollEnd = (deg: number, _duration: number) => {
         index += props.listLength 
       }
       emit('onScrollEnd', index, deg)
-    }, _duration ?? duration);
+    }, _duration ?? duration.value);
   }
 }
 
