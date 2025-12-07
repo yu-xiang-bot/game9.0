@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useUserInfoStore } from '@/stores/userInfo'
 
-const routes = [
+const routes: Array<any> = [
   {
     path: '/login',
     name: 'login',
@@ -54,7 +54,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(), // hash模式：createWebHashHistory history模式：createWebHistory
-  routes: routes as any
+  routes
 })
 
 // 路由守卫

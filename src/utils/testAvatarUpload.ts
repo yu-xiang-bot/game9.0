@@ -111,9 +111,9 @@ export const quickTest = async () => {
 // 在开发环境中暴露到全局
 if (import.meta.env.DEV) {
   (window as any).testAvatarUpload = testAvatarUpload
-  Promise.resolve().then(() => {
+  setTimeout(() => {
     (window as any).quickTestAvatarUpload = quickTest
-  })
+  }, 0)
   console.log('🔧 头像上传测试工具已加载')
   console.log('使用 testAvatarUpload(userId) 或 quickTestAvatarUpload() 进行测试')
 }
