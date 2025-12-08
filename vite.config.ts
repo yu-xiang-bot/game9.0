@@ -9,7 +9,7 @@ export default defineConfig({
     vue(), 
     vueJsx()
   ],
-  base: '/塔防联盟/',
+  base: '/game9.0/',
   server: {
     // 允许局域网访问 (package.json中 ( "dev": "vite --host 0.0.0.0" ) 这样也行)
     host: "0.0.0.0",
